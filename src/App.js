@@ -24,16 +24,15 @@ function App() {
           );
           const weather = await weatherResponse.json();
           console.log(weather);
-          setWeatherData(weather);
+          await setWeatherData(weather);
           // weather.current.map((item) => {
           //   return console.log("item", item);
           // });
-          console.log("weather data", weatherData);
+          await console.log("weather data", weatherData);
         } catch (error) {
           console.log("error", error);
         }
       }
-      console.log(location);
       getWeatherData();
     }
   }, [location]);
@@ -42,9 +41,10 @@ function App() {
     e.preventDefault();
     setLocation(inputData);
   };
-  if (!weatherData) {
-    <p>Loading</p>;
-  }
+  // console.log(new Date().getTime());
+  // if (!weatherData) {
+  //   return <p>Loading</p>;
+  // }
   return (
     <main>
       <SearchLocation
@@ -52,6 +52,33 @@ function App() {
         inputData={inputData}
         setInputData={setInputData}
       />
+      {weatherData && (
+        <>
+          <section className="weather-information">
+            <h2 className="location">{weatherData.timezone.split("/")[1]}</h2>
+            <h3 className="temperature">{`${weatherData.current.temp} °C`}</h3>
+            {/* <img src="" alt="weather-icon" /> */}
+            <h3 className="weather-description">
+              {weatherData.current.weather[0].description}
+            </h3>
+            <h4>{`Feels like: ${weatherData.current.feels_like} °C`}</h4>
+            <h4>{`Humidity Level: ${weatherData.current.humidity} %`}</h4>
+            <h4>{`Wind Speed: ${weatherData.current.wind_speed} km/hr`}</h4>
+          </section>
+          <section className="daily-weather">
+            <h3>Daily Weather</h3>
+            {weatherData.daily.map((day, index) => {
+              return <p key={index}>{`${day.weather[0].main}`}</p>;
+            })}
+          </section>
+          <section className="hourly-weather">
+            <h3>Hourly Weather</h3>
+            {weatherData.hourly.map((hour, index) => {
+              return index < 24 && <p>{`${hour.weather[0].main}`}</p>;
+            })}
+          </section>
+        </>
+      )}
     </main>
   );
 }
