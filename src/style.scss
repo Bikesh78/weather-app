@@ -1,20 +1,21 @@
+$color__primary: #407de6;
+$color__secondary: #4b8dff;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
+  // min-height: 100vh;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.2;
   color: white;
 }
-
 h1 {
   font-weight: 500;
 }
-
 h1,
 h2,
 h3,
@@ -23,12 +24,10 @@ h5,
 h6 {
   text-transform: capitalize;
 }
-
 main {
   display: flex;
   min-height: 100vh;
 }
-
 .input-container {
   display: flex;
   max-width: 200px;
@@ -36,26 +35,24 @@ main {
   align-items: center;
   padding: 0 10px;
   justify-content: space-around;
+  input {
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    border: transparent;
+    outline: transparent;
+    background: transparent;
+    &::placeholder {
+      color: white;
+    }
+  }
 }
-.input-container input {
-  font-size: 16px;
-  color: white;
-  padding: 10px;
-  border: transparent;
-  outline: transparent;
-  background: transparent;
-}
-.input-container input::placeholder {
-  color: white;
-}
-
 .weather-info {
   position: relative;
-  background-color: #407de6;
+  background-color: $color__primary;
   padding: 20px;
   flex-grow: 1;
 }
-
 .card {
   position: absolute;
   top: 50%;
@@ -67,18 +64,15 @@ main {
   align-items: center;
   gap: 10px;
 }
-
 .card--flex {
   display: flex;
   align-items: center;
 }
-
 .card__icon,
 .forecast__icon {
   width: 75px;
   height: auto;
 }
-
 .forecast {
   padding: 20px;
   display: flex;
@@ -86,20 +80,17 @@ main {
   justify-content: space-evenly;
   flex-grow: 1;
   max-width: 60%;
-  background-color: #4b8dff;
+  background-color: $color__secondary;
 }
-
 .forecast-daily {
   display: flex;
   flex-direction: column;
 }
-
 .forecast__list {
   list-style: none;
   display: flex;
   overflow-x: auto;
 }
-
 .forecast__content {
   padding: 10px 0;
   display: flex;
@@ -107,5 +98,3 @@ main {
   justify-content: center;
   align-items: center;
 }
-
-/*# sourceMappingURL=index.css.map */

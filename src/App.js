@@ -41,45 +41,97 @@ function App() {
     e.preventDefault();
     setLocation(inputData);
   };
+  const getIcon = (iconCode) => {
+    return `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  };
   // console.log(new Date().getTime());
   // if (!weatherData) {
   //   return <p>Loading</p>;
   // }
   return (
-    <main>
-      <SearchLocation
-        handleSubmit={handleSubmit}
-        inputData={inputData}
-        setInputData={setInputData}
-      />
-      {weatherData && (
-        <>
-          <section className="weather-information">
-            <h2 className="location">{weatherData.timezone.split("/")[1]}</h2>
-            <h3 className="temperature">{`${weatherData.current.temp} °C`}</h3>
-            {/* <img src="" alt="weather-icon" /> */}
-            <h3 className="weather-description">
-              {weatherData.current.weather[0].description}
-            </h3>
-            <h4>{`Feels like: ${weatherData.current.feels_like} °C`}</h4>
-            <h4>{`Humidity Level: ${weatherData.current.humidity} %`}</h4>
-            <h4>{`Wind Speed: ${weatherData.current.wind_speed} km/hr`}</h4>
-          </section>
-          <section className="daily-weather">
-            <h3>Daily Weather</h3>
-            {weatherData.daily.map((day, index) => {
-              return <p key={index}>{`${day.weather[0].main}`}</p>;
-            })}
-          </section>
-          <section className="hourly-weather">
-            <h3>Hourly Weather</h3>
-            {weatherData.hourly.map((hour, index) => {
-              return index < 24 && <p>{`${hour.weather[0].main}`}</p>;
-            })}
-          </section>
-        </>
-      )}
-    </main>
+    <>
+      <main>
+        <div className="weather-info">
+          <SearchLocation
+            handleSubmit={handleSubmit}
+            inputData={inputData}
+            setInputData={setInputData}
+          />
+          {weatherData && (
+            <div className="card">
+              <h1 className="card__location">
+                {weatherData.timezone.split("/")[1]}
+              </h1>
+              <div className="card--flex">
+                <img
+                  className="card__icon"
+                  src={getIcon(weatherData.current.weather[0].icon)}
+                  alt="Weather Condition Icon"
+                />
+                <h3 className="card__temperature">{`${weatherData.current.temp}° C`}</h3>
+              </div>
+              {/* <img src="" alt="weather-icon" /> */}
+              <h3 className="card__description">
+                {weatherData.current.weather[0].description}
+              </h3>
+              <h4>{`Feels like: ${weatherData.current.feels_like}° C`}</h4>
+              <h4>{`Humidity Level: ${weatherData.current.humidity}%`}</h4>
+              <h4>{`Wind Speed: ${weatherData.current.wind_speed} km/hr`}</h4>
+            </div>
+          )}
+        </div>
+        {weatherData && (
+          <div className="forecast">
+            <div className="forecast-daily">
+              <div className="forecast__header">
+                <h3>Daily Weather</h3>
+              </div>
+              <ul className="forecast__list">
+                {weatherData.daily.map((day, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="forecast__content">
+                        <p className="forecast__text">Day</p>
+                        <img
+                          className="forecast__icon"
+                          src={getIcon(day.weather[0].icon)}
+                          alt="Weather Condition Icon"
+                        />
+                        <p className="forecast__text">{`${day.feels_like.day}° C`}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="forecast-hourly">
+              <div className="forecast__header">
+                <h3>Hourly Weather</h3>
+              </div>
+              <ul className="forecast__list">
+                {weatherData.hourly.map((hour, index) => {
+                  return (
+                    <li key={index}>
+                      {index < 24 && (
+                        <div className="forecast__content">
+                          <p className="forecast__text">Time</p>
+                          <img
+                            className="forecast__icon"
+                            src={getIcon(hour.weather[0].icon)}
+                            alt="Weather Condition Icon"
+                          />
+                          <p className="forecast__text">{`${hour.temp}° C`}</p>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        )}
+      </main>
+    </>
   );
 }
 
