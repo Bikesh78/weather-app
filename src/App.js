@@ -44,10 +44,52 @@ function App() {
   const getIcon = (iconCode) => {
     return `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
   };
-  // console.log(new Date().getTime());
-  // if (!weatherData) {
-  //   return <p>Loading</p>;
-  // }
+  const getDay = (index) => {
+    const currentDay = new Date().getDay();
+    let dayOfTheWeek = currentDay + index;
+    if (dayOfTheWeek > 6) {
+      dayOfTheWeek = dayOfTheWeek - 7;
+    }
+    switch (dayOfTheWeek) {
+      case 0:
+        return "Sun";
+      case 1:
+        return "Mon";
+      case 2:
+        return "Tue";
+      case 3:
+        return "Wed";
+      case 4:
+        return "Thu";
+      case 5:
+        return "Fri";
+      case 6:
+        return "Sat";
+      default:
+        return;
+    }
+  };
+  const getHour = (index) => {
+    const currentHour = new Date().getHours();
+    let timeOfTheDay = currentHour + index;
+    if (timeOfTheDay < 12) {
+      return `${timeOfTheDay} am`;
+    } else if (timeOfTheDay === 12) {
+      return "12 pm";
+    } else if (timeOfTheDay > 12 && timeOfTheDay < 24) {
+      return `${timeOfTheDay - 12} pm`;
+    } else if (timeOfTheDay === 24) {
+      return "12 am";
+    } else if (timeOfTheDay > 24 && timeOfTheDay - 24 < 12) {
+      return `${timeOfTheDay - 24} pm`;
+    } else if (timeOfTheDay > 24 && timeOfTheDay - 24 === 12) {
+      return "12 pm";
+    } else if (timeOfTheDay > 24 && timeOfTheDay - 24 > 12) {
+      return `${timeOfTheDay - 24 - 12} am`;
+    } else if (timeOfTheDay > 24) {
+      return `${timeOfTheDay - 24} am`;
+    }
+  };
   return (
     <>
       <main>
@@ -91,7 +133,7 @@ function App() {
                   return (
                     <li key={index}>
                       <div className="forecast__content">
-                        <p className="forecast__text">Day</p>
+                        <p className="forecast__text day">{getDay(index)}</p>
                         <img
                           className="forecast__icon"
                           src={getIcon(day.weather[0].icon)}
@@ -114,7 +156,7 @@ function App() {
                     <li key={index}>
                       {index < 24 && (
                         <div className="forecast__content">
-                          <p className="forecast__text">Time</p>
+                          <p className="forecast__text">{getHour(index)}</p>
                           <img
                             className="forecast__icon"
                             src={getIcon(hour.weather[0].icon)}
