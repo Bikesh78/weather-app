@@ -108,4 +108,52 @@ main {
   align-items: center;
 }
 
+.toggle-switch {
+  position: relative;
+}
+.toggle-switch input {
+  display: none;
+}
+.toggle-switch .toggle__label {
+  cursor: pointer;
+}
+.toggle-switch .toggle__label::after {
+  background-color: #4b8dff;
+  display: inline-block;
+  width: 65px;
+  height: 30px;
+  content: "";
+  border-radius: 15px;
+}
+.toggle-switch .toggle__label::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: white;
+  top: 2.5px;
+  left: 35px;
+  transition: all 0.3s ease-in-out;
+}
+.toggle-switch .toggle__label .toggle__background::before {
+  content: "C";
+  display: inline-block;
+  position: absolute;
+  font-size: 22px;
+  left: 8px;
+  top: 2px;
+}
+.toggle-switch .toggle__label .toggle__background::after {
+  content: "F";
+  position: absolute;
+  left: 65%;
+  font-size: 22px;
+  top: 2px;
+}
+.toggle-switch input:checked + .toggle__label::before {
+  left: 3px;
+}
+
 /*# sourceMappingURL=index.css.map */

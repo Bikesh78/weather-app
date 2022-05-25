@@ -4,7 +4,9 @@ import SearchLocation from "./Components/SearchLocation";
 function App() {
   const [weatherData, setWeatherData] = useState("");
   const [inputData, setInputData] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Kathmandu");
+  const [isCelsius, setIsCelsius] = useState(true);
+
   useEffect(() => {
     if (location) {
       async function getWeatherData() {
@@ -14,7 +16,7 @@ function App() {
             `https://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=e0df6556437f2cd771ad7a0fe9ec3724`
           );
           const coordinates = await response.json();
-          console.log(coordinates);
+          // console.log(coordinates);
           const lat = coordinates[0].lat;
           const lon = coordinates[0].lon;
           // fetch weather data
@@ -23,12 +25,12 @@ function App() {
 &units=metric`
           );
           const weather = await weatherResponse.json();
-          console.log(weather);
+          // console.log(weather);
           await setWeatherData(weather);
           // weather.current.map((item) => {
           //   return console.log("item", item);
           // });
-          await console.log("weather data", weatherData);
+          // await console.log("weather data", weatherData);
         } catch (error) {
           console.log("error", error);
         }
@@ -90,6 +92,14 @@ function App() {
       return `${timeOfTheDay - 24} am`;
     }
   };
+  // F = 9/5C + 32
+  const toggleTemperature = (temperature) => {
+    if (!isCelsius) {
+      const farenheightTemperature = (9 / 5) * temperature + 32;
+      return farenheightTemperature.toFixed(2);
+    }
+  };
+  toggleTemperature(3.6);
   return (
     <>
       <main>
@@ -110,15 +120,33 @@ function App() {
                   src={getIcon(weatherData.current.weather[0].icon)}
                   alt="Weather Condition Icon"
                 />
-                <h3 className="card__temperature">{`${weatherData.current.temp}° C`}</h3>
+                <h3 className="card__temperature">
+                  {isCelsius
+                    ? `${weatherData.current.temp}° C`
+                    : `${toggleTemperature(weatherData.current.temp)}° F`}
+                </h3>
               </div>
-              {/* <img src="" alt="weather-icon" /> */}
               <h3 className="card__description">
                 {weatherData.current.weather[0].description}
               </h3>
-              <h4>{`Feels like: ${weatherData.current.feels_like}° C`}</h4>
+              <h4>
+                Feels like:{" "}
+                {isCelsius
+                  ? `${weatherData.current.feels_like}° C`
+                  : `${toggleTemperature(weatherData.current.feels_like)}° F`}
+              </h4>
               <h4>{`Humidity Level: ${weatherData.current.humidity}%`}</h4>
               <h4>{`Wind Speed: ${weatherData.current.wind_speed} km/hr`}</h4>
+              <div className="toggle-switch">
+                <input type="checkbox" id="toggle__checkbox" />
+                <label
+                  htmlFor="toggle__checkbox"
+                  className="toggle__label"
+                  onClick={() => setIsCelsius(!isCelsius)}
+                >
+                  <span className="toggle__background"></span>
+                </label>
+              </div>
             </div>
           )}
         </div>
@@ -139,7 +167,11 @@ function App() {
                           src={getIcon(day.weather[0].icon)}
                           alt="Weather Condition Icon"
                         />
-                        <p className="forecast__text">{`${day.feels_like.day}° C`}</p>
+                        <p className="forecast__text">
+                          {isCelsius
+                            ? `${day.feels_like.day}° C`
+                            : `${toggleTemperature(day.feels_like.day)}° F`}
+                        </p>
                       </div>
                     </li>
                   );
@@ -162,7 +194,11 @@ function App() {
                             src={getIcon(hour.weather[0].icon)}
                             alt="Weather Condition Icon"
                           />
-                          <p className="forecast__text">{`${hour.temp}° C`}</p>
+                          <p className="forecast__text">
+                            {isCelsius
+                              ? `${hour.temp}° C`
+                              : `${toggleTemperature(hour.temp)} ° C`}
+                          </p>
                         </div>
                       )}
                     </li>
