@@ -33,6 +33,7 @@ function App() {
           //   return console.log("item", item);
           // });
           // await console.log("weather data", weatherData);
+          setError(false);
         } catch (error) {
           console.log("error", error);
           setError(true);
@@ -68,7 +69,11 @@ function App() {
             inputData={inputData}
             setInputData={setInputData}
           />
-          {error && <p>There was an error fetching location</p>}
+          {error && (
+            <h2 className="fallback-message">
+              There was an error fetching location
+            </h2>
+          )}
           {!error && weatherData && (
             <CurrentWeather
               weatherData={weatherData}

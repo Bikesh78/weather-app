@@ -60,33 +60,35 @@ function ForecastList({
       {weatherData.map((item, index) => {
         return (
           <li key={index}>
-            <div className="forecast__content">
-              {forecastType === "daily" && (
-                <p className="forecast__text day">{getDay(index)}</p>
-              )}
-              {forecastType === "hourly" && (
-                <p className="forecast__text">{getHour(index)}</p>
-              )}
-              <img
-                className="forecast__icon"
-                src={getIcon(item.weather[0].icon)}
-                alt="Weather Condition Icon"
-              />
-              {forecastType === "daily" && (
-                <p className="forecast__text">
-                  {isCelsius
-                    ? `${item.feels_like.day}° C`
-                    : `${toggleTemperature(item.feels_like.day)}° F`}
-                </p>
-              )}
-              {forecastType === "hourly" && (
-                <p className="forecast__text">
-                  {isCelsius
-                    ? `${item.temp}° C`
-                    : `${toggleTemperature(item.temp)} ° C`}
-                </p>
-              )}
-            </div>
+            {index < 24 && (
+              <div className="forecast__content">
+                {forecastType === "daily" && (
+                  <p className="forecast__text day">{getDay(index)}</p>
+                )}
+                {forecastType === "hourly" && (
+                  <p className="forecast__text">{getHour(index)}</p>
+                )}
+                <img
+                  className="forecast__icon"
+                  src={getIcon(item.weather[0].icon)}
+                  alt="Weather Condition Icon"
+                />
+                {forecastType === "daily" && (
+                  <p className="forecast__text">
+                    {isCelsius
+                      ? `${item.feels_like.day}° C`
+                      : `${toggleTemperature(item.feels_like.day)}° F`}
+                  </p>
+                )}
+                {forecastType === "hourly" && (
+                  <p className="forecast__text">
+                    {isCelsius
+                      ? `${item.temp}° C`
+                      : `${toggleTemperature(item.temp)} ° C`}
+                  </p>
+                )}
+              </div>
+            )}
           </li>
         );
       })}
