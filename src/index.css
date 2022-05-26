@@ -49,6 +49,10 @@ main {
   color: white;
 }
 
+.search-icon {
+  cursor: pointer;
+}
+
 .weather-info {
   position: relative;
   background-color: #407de6;
@@ -89,9 +93,8 @@ main {
   background-color: #4b8dff;
 }
 
-.forecast-daily {
-  display: flex;
-  flex-direction: column;
+.forecast__header {
+  margin-bottom: 10px;
 }
 
 .forecast__list {

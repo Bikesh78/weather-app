@@ -15,7 +15,7 @@ export default function SearchLocation({
           value={inputData}
           placeholder="Search Location"
         />
-        <div className="search-icon">
+        <div className="search-icon" onClick={handleSubmit}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"

@@ -48,6 +48,9 @@ main {
     }
   }
 }
+.search-icon {
+  cursor: pointer;
+}
 .weather-info {
   position: relative;
   background-color: $color__primary;
@@ -83,9 +86,12 @@ main {
   max-width: 60%;
   background-color: $color__secondary;
 }
-.forecast-daily {
-  display: flex;
-  flex-direction: column;
+// .forecast-daily {
+//   display: flex;
+//   flex-direction: column;
+// }
+.forecast__header {
+  margin-bottom: 10px;
 }
 .forecast__list {
   list-style: none;
